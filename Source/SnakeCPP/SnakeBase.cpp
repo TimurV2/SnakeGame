@@ -18,14 +18,15 @@ ASnakeBase::ASnakeBase()
 void ASnakeBase::BeginPlay()
 {
 	Super::BeginPlay();
-	AddSnakeElement(4);
+	SetActorTickInterval(MovementSpeed);
+	AddSnakeElement(5);
 }
 
 // Called every frame
 void ASnakeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	Move(DeltaTime);
+	Move();
 
 }
 
@@ -38,34 +39,53 @@ void ASnakeBase::AddSnakeElement(int ElementsNum)
 		FVector NewLocation(SnakeElements.Num() * ElementSize, 0, 0);
 		FTransform NewTransform(NewLocation);
 		ASnakeElementBase* NewSnakeElem = GetWorld()->SpawnActor<ASnakeElementBase>(SnakeElementBase, NewTransform);
-		NewSnakeElem->AttachToActor(this, FAttachmentTransformRules::KeepRelativeTransform);
-		SnakeElements.Add(NewSnakeElem);
+
+		int32 ElemIndex = SnakeElements.Add(NewSnakeElem);
+		if (ElemIndex==0)
+		{
+
+		}
 	}
 
 }
 
-void ASnakeBase::Move(float DeltaTime)
+void ASnakeBase::Move()
 {
-	FVector MovementVector;
-	float MovementSpeedDelta = DeltaTime * MovementSpeed;
+	FVector MovementVector(ForceInitToZero);
+	MovementSpeed = ElementSize;
+
 	
 	switch (LastMoveDirection) 
 	{
 	case EMovementDirection::UP:
-		MovementVector.X += MovementSpeedDelta;
+		MovementVector.X += MovementSpeed;
 		break;
 	case EMovementDirection::DOWN:
-		MovementVector.X -= MovementSpeedDelta;
+		MovementVector.X -= MovementSpeed;
 		break;
 	case EMovementDirection::LEFT:
-		MovementVector.Y -= MovementSpeedDelta;
+		MovementVector.Y -= MovementSpeed;
 		break;
 	case EMovementDirection::RIGHT:
-		MovementVector.Y += MovementSpeedDelta;
+		MovementVector.Y += MovementSpeed;
 		break;
 	}
 
-	AddActorWorldOffset(MovementVector);
+	// AddActorWorldOffset(MovementVector);
 
+	for (int i = SnakeElements.Num() - 1; i > 0; i--) 
+	{
+		auto CurrentElement = SnakeElements[i];
+		auto PrevElement = SnakeElements[i - 1];
+		FVector PrevLocation = PrevElement->GetActorLocation();
+		CurrentElement->SetActorLocation(PrevLocation);
+	}
+
+	SnakeElements[0]->AddActorWorldOffset(MovementVector);
 }
+
+//void ASnakeBase::SetFirstElementType()
+//{
+//
+//}
 
