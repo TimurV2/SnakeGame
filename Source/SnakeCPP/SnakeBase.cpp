@@ -20,7 +20,8 @@ void ASnakeBase::BeginPlay()
 {
 	Super::BeginPlay();
 	SetActorTickInterval(MovementSpeed);
-	AddSnakeElement(5);
+	AddSnakeElement(2);
+	int i = 0;
 }
 
 // Called every frame
@@ -37,15 +38,25 @@ void ASnakeBase::AddSnakeElement(int ElementsNum)
 
 	for (int i = 0; i < ElementsNum; i++) 
 	{
-		FVector NewLocation(SnakeElements.Num() * ElementSize, 0, 0);
-		FTransform NewTransform(NewLocation);
-		ASnakeElementBase* NewSnakeElem = GetWorld()->SpawnActor<ASnakeElementBase>(SnakeElementBase, NewTransform);
-		NewSnakeElem->SnakeOwner = this;
-
-		int32 ElemIndex = SnakeElements.Add(NewSnakeElem);
-		if (ElemIndex==0)
+		if (SnakeElements.Num() > 1) // if ¹ of elements is greater than at the begining->we spawn actor in location of the last actor of snake el
 		{
-			NewSnakeElem->SetFirstElementType();
+			FVector NewLocation(SnakeElements[SnakeElements.Num()-1]->GetActorLocation());
+			FTransform NewTransform(NewLocation);
+			ASnakeElementBase* NewSnakeElem = GetWorld()->SpawnActor<ASnakeElementBase>(SnakeElementBase, NewTransform);
+			NewSnakeElem->SnakeOwner = this;
+			int32 ElemIndex = SnakeElements.Add(NewSnakeElem);
+		}
+		else 
+		{
+			FVector NewLocation(SnakeElements.Num() * ElementSize, 0, 0); // spawn elements of snake at the begining of the game
+			FTransform NewTransform(NewLocation);
+			ASnakeElementBase* NewSnakeElem = GetWorld()->SpawnActor<ASnakeElementBase>(SnakeElementBase, NewTransform);
+			NewSnakeElem->SnakeOwner = this;
+			int32 ElemIndex = SnakeElements.Add(NewSnakeElem);
+			if (ElemIndex == 0)
+			{
+				NewSnakeElem->SetFirstElementType();
+			} // just comm?
 		}
 	}
 
