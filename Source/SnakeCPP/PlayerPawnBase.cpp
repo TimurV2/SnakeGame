@@ -48,7 +48,7 @@ void APlayerPawnBase::CreateSnakeActor()
 
 void APlayerPawnBase::HandlePlayerVerticalInput(float value)
 {
-	if (IsValid(SnakeActor)) 
+	if (IsValid(SnakeActor) && SnakeActor->bCanMove == false)
 	{
 		if (value > 0 && SnakeActor->LastMoveDirection!=EMovementDirection::DOWN) 
 		{
@@ -58,12 +58,13 @@ void APlayerPawnBase::HandlePlayerVerticalInput(float value)
 		{
 			SnakeActor->LastMoveDirection = EMovementDirection::DOWN;
 		}
+		SnakeActor->bCanMove = true;
 	}
 }
 
 void APlayerPawnBase::HandlePlayerHorizontalInput(float value)
 {
-	if (IsValid(SnakeActor))
+	if (IsValid(SnakeActor) && SnakeActor->bCanMove == false)
 	{
 		if (value > 0 && SnakeActor->LastMoveDirection!=EMovementDirection::LEFT)
 		{
@@ -73,6 +74,8 @@ void APlayerPawnBase::HandlePlayerHorizontalInput(float value)
 		{
 			SnakeActor->LastMoveDirection = EMovementDirection::LEFT;
 		}
+
+		SnakeActor->bCanMove = true;
 	}
 }
 

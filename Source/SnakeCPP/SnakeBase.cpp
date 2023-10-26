@@ -28,7 +28,10 @@ void ASnakeBase::BeginPlay()
 void ASnakeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	Move();
+	if (bCanMove) 
+	{
+		Move();
+	}
 
 }
 
