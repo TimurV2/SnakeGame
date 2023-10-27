@@ -28,9 +28,9 @@ void ASnakeBase::BeginPlay()
 void ASnakeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	bCanMove = false;
+	
 	Move();
-	bCanMove = true;
+	
 }
 
 void ASnakeBase::AddSnakeElement(int ElementsNum)
@@ -64,6 +64,7 @@ void ASnakeBase::AddSnakeElement(int ElementsNum)
 
 void ASnakeBase::Move()
 {
+	this->bCanMove = false;
 	FVector MovementVector(ForceInitToZero);
 	
 	switch (LastMoveDirection) 
@@ -97,6 +98,7 @@ void ASnakeBase::Move()
 
 	SnakeElements[0]->AddActorWorldOffset(MovementVector);
 	SnakeElements[0]->ToggleCollision();
+	this->bCanMove = true;
 }
 
 void ASnakeBase::SnakeElementOverlap(ASnakeElementBase* OverlappedElement, AActor* Other)
