@@ -8,7 +8,7 @@
 // Sets default values
 ASnakeBase::ASnakeBase()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ 	// Set this actor to call Tick() every frame. You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	ElementSize = 100.f;
 	MovementSpeed = 10.f;
@@ -28,16 +28,13 @@ void ASnakeBase::BeginPlay()
 void ASnakeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (bCanMove) 
-	{
-		Move();
-	}
-
+	bCanMove = false;
+	Move();
+	bCanMove = true;
 }
 
 void ASnakeBase::AddSnakeElement(int ElementsNum)
 {
-	// SnakeElements.Num()*ElementSize;
 
 	for (int i = 0; i < ElementsNum; i++) 
 	{
@@ -59,7 +56,7 @@ void ASnakeBase::AddSnakeElement(int ElementsNum)
 			if (ElemIndex == 0)
 			{
 				NewSnakeElem->SetFirstElementType();
-			} // just comm?
+			} 
 		}
 	}
 
@@ -84,6 +81,8 @@ void ASnakeBase::Move()
 		MovementVector.Y += ElementSize;
 		break;
 	}
+
+	// this->bCanMove = false; // setting ability to move to false so we can bind on player input in PlayerPawnBase
 
 	// AddActorWorldOffset(MovementVector);
 	SnakeElements[0]->ToggleCollision();

@@ -48,7 +48,7 @@ void APlayerPawnBase::CreateSnakeActor()
 
 void APlayerPawnBase::HandlePlayerVerticalInput(float value)
 {
-	if (IsValid(SnakeActor) && SnakeActor->bCanMove == false)
+	if (IsValid(SnakeActor) && SnakeActor->bCanMove == true) // if false we can listen to player input 
 	{
 		if (value > 0 && SnakeActor->LastMoveDirection!=EMovementDirection::DOWN) 
 		{
@@ -58,13 +58,13 @@ void APlayerPawnBase::HandlePlayerVerticalInput(float value)
 		{
 			SnakeActor->LastMoveDirection = EMovementDirection::DOWN;
 		}
-		SnakeActor->bCanMove = true;
+		// SnakeActor->bCanMove = true; // changing to true so we can move snake
 	}
 }
 
 void APlayerPawnBase::HandlePlayerHorizontalInput(float value)
 {
-	if (IsValid(SnakeActor) && SnakeActor->bCanMove == false)
+	if (IsValid(SnakeActor) && SnakeActor->bCanMove == true) // if false we can listen to player input 
 	{
 		if (value > 0 && SnakeActor->LastMoveDirection!=EMovementDirection::LEFT)
 		{
@@ -75,7 +75,7 @@ void APlayerPawnBase::HandlePlayerHorizontalInput(float value)
 			SnakeActor->LastMoveDirection = EMovementDirection::LEFT;
 		}
 
-		SnakeActor->bCanMove = true;
+		// SnakeActor->bCanMove = true; // changing to true so we can move snake
 	}
 }
 

@@ -23,7 +23,6 @@ void AFood::BeginPlay()
 void AFood::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AFood::Interact(AActor* Interactor, bool bIsHead)
@@ -37,5 +36,23 @@ void AFood::Interact(AActor* Interactor, bool bIsHead)
 			this->Destroy();
 		}
 	}
+}
+
+void AFood::SpawnFood()
+{
+	// x in [-470; 470]
+	// y in [-470; 470]
+
+	//float min_x_y = -470.f;
+	//float max_x_y = 470.f;
+
+	//float spawn_z = 40;
+	//float spawn_x = FMath::FRandRange(min_x_y, max_x_y);
+	//float spawn_y = FMath::FRandRange(min_x_y, max_x_y);
+
+	//FVector NewFoodLocation(spawn_x, spawn_y, spawn_z);
+	//FTransform FoodTransform(NewFoodLocation);
+	//AFood* SpawnedFood = GetWorld()->SpawnActor<AFood>)();
+	//// AFood* Food_Elem = 
 }
 
