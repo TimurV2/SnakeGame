@@ -83,9 +83,6 @@ void ASnakeBase::Move()
 		break;
 	}
 
-	// this->bCanMove = false; // setting ability to move to false so we can bind on player input in PlayerPawnBase
-
-	// AddActorWorldOffset(MovementVector);
 	SnakeElements[0]->ToggleCollision();
 
 	for (int i = SnakeElements.Num() - 1; i > 0; i--) 

@@ -37,7 +37,7 @@ public:
 
 	UPROPERTY()
 	TArray<ASnakeElementBase*> SnakeElements;
-
+	
 	UPROPERTY()
 	EMovementDirection LastMoveDirection;
 
